@@ -17,7 +17,7 @@ namespace InventorySystem
                 Console.WriteLine("=================================");
                 Console.WriteLine("  INVENTORY ORDER SYSTEM MANAGEMENT");
                 Console.WriteLine("=================================");
-                Console.WriteLine("1. View Current Inventory");
+                Console.WriteLine("1. View inventory");
                 Console.WriteLine("2. Add New Product");
                 Console.WriteLine("3. Process Customer Order");
                 Console.WriteLine("4. Exit");
