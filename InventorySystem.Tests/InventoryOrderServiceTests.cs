@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using InventorySystem;
+using Xunit;
 
 namespace InventorySystem.Tests
 {
@@ -24,7 +21,8 @@ namespace InventorySystem.Tests
 
             service.AddProduct(product);
 
-            OrderResult result = service.ProcessOrder("0110", 15, 10.00m);
+            
+            OrderResult result = service.ProcessOrder("0110", 15, 0.10m);
 
             Assert.True(result.IsSuccess);
             Assert.Equal("Order processed successfully.", result.Message);
@@ -46,10 +44,32 @@ namespace InventorySystem.Tests
 
             service.AddProduct(product);
 
-            OrderResult result = service.ProcessOrder("0102", 15, 10.00m);
+            OrderResult result = service.ProcessOrder("0102", 15, 0.10m);
 
             Assert.True(result.IsSuccess);
-            Assert.Equal(15, product.StockQuantity);
+            Assert.Equal(5, product.StockQuantity);
+        }
+
+        [Fact]
+        public void ProcessOrder_ValidOrder_CalculatesTotalCost()
+        {
+            
+            InventoryOrderService service = new InventoryOrderService();
+
+            Product product = new Product
+            {
+                Id = "0103",
+                Name = "HotWings",
+                UnitPrice = 10.00m,
+                StockQuantity = 20
+            };
+
+            service.AddProduct(product);
+
+            OrderResult result = service.ProcessOrder("0103", 2, 0.05m);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal(21.00m, result.TotalCost);
         }
     }
 }
