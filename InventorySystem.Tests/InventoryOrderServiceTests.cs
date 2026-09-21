@@ -11,23 +11,21 @@ namespace InventorySystem.Tests
         [Fact]
         public void ProcessOrder_ValidOrder_ReturnsSuccess()
         {
-            // Arrange
+            
             InventoryOrderService service = new InventoryOrderService();
 
             Product product = new Product
             {
-                Id = "P001",
-                Name = "Coffee",
+                Id = "0110",
+                Name = "Hot Tea",
                 UnitPrice = 10.00m,
-                StockQuantity = 20
+                StockQuantity = 15
             };
 
             service.AddProduct(product);
 
-            // Act
-            OrderResult result = service.ProcessOrder("P001", 2, 0.05m);
+            OrderResult result = service.ProcessOrder("0110", 15, 10.00m);
 
-            // Assert
             Assert.True(result.IsSuccess);
             Assert.Equal("Order processed successfully.", result.Message);
         }
@@ -35,12 +33,12 @@ namespace InventorySystem.Tests
         [Fact]
         public void ProcessOrder_ValidOrder_DeductsStock()
         {
-            // Arrange
+            
             InventoryOrderService service = new InventoryOrderService();
 
             Product product = new Product
             {
-                Id = "P002",
+                Id = "0102",
                 Name = "Burger",
                 UnitPrice = 8.00m,
                 StockQuantity = 20
@@ -48,10 +46,8 @@ namespace InventorySystem.Tests
 
             service.AddProduct(product);
 
-            // Act
-            OrderResult result = service.ProcessOrder("P002", 5, 0.05m);
+            OrderResult result = service.ProcessOrder("0102", 15, 10.00m);
 
-            // Assert
             Assert.True(result.IsSuccess);
             Assert.Equal(15, product.StockQuantity);
         }
