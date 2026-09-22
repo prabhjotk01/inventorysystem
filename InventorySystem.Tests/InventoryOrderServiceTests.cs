@@ -93,5 +93,29 @@ namespace InventorySystem.Tests
             Assert.True(result.IsSuccess);
             Assert.Equal(0.00m, result.TotalCost);
         }
+
+        [Theory]
+        [InlineData(10, 90.00)]
+        [InlineData(50, 400.00)]
+        public void ProcessOrder_DiscountBoundaries_CalculatesCorrectTotal(int quantity, decimal expectedTotal)
+        {
+            
+            InventoryOrderService service = new InventoryOrderService();
+
+            Product product = new Product
+            {
+                Id = "0105",
+                Name = "Chicken",
+                UnitPrice = 10.00m,
+                StockQuantity = 60
+            };
+
+            service.AddProduct(product);
+
+            OrderResult result = service.ProcessOrder("0105", quantity, 0.00m);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal(expectedTotal, result.TotalCost);
+        }
     }
 }
