@@ -54,6 +54,10 @@
             {
                 return new OrderResult { IsSuccess = false, Message = "Insufficient stock." };
             }
+            if (taxRate < 0)
+            {
+                return new OrderResult { IsSuccess = false, Message = "Tax rate cannot be negative." };
+            }
 
             decimal discount = 0.0m;
 
