@@ -153,6 +153,28 @@ namespace InventorySystem.Tests
 
             Assert.Throws<ArgumentException>(() => service.AddProduct(product));
         }
+
+        [Fact]
+        public void ProcessOrder_NegativeTaxRate_ReturnsFailure()
+        {
+
+            InventoryOrderService service = new InventoryOrderService();
+
+            Product product = new Product
+            {
+                Id = "0107",
+                Name = "Coffee",
+                UnitPrice = 10.00m,
+                StockQuantity = 10
+            };
+
+            service.AddProduct(product);
+
+            OrderResult result = service.ProcessOrder("0107", 2, -0.05m);
+
+            Assert.False(result.IsSuccess);
+            Assert.Equal("Tax rate cannot be negative.", result.Message);
+        }
     }
 
 }
