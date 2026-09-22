@@ -117,5 +117,30 @@ namespace InventorySystem.Tests
             Assert.True(result.IsSuccess);
             Assert.Equal(expectedTotal, result.TotalCost);
         }
+
+        [Theory]
+        [InlineData(10, 10)]
+        [InlineData(5, 5)]
+        public void ProcessOrder_StockBoundaries_ReturnsSuccess(int stockQuantity, int orderQuantity)
+        {
+
+            InventoryOrderService service = new InventoryOrderService();
+
+            Product product = new Product
+            {
+                Id = "0106",
+                Name = "Coffee",
+                UnitPrice = 5.00m,
+                StockQuantity = stockQuantity
+            };
+
+            service.AddProduct(product);
+
+            OrderResult result = service.ProcessOrder("0106", orderQuantity, 0.00m);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal("Order processed successfully.", result.Message);
+            Assert.Equal(0, product.StockQuantity);
+        }
     }
 }
