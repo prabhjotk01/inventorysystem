@@ -142,5 +142,17 @@ namespace InventorySystem.Tests
             Assert.Equal("Order processed successfully.", result.Message);
             Assert.Equal(0, product.StockQuantity);
         }
+
+        [Fact]
+        public void AddProduct_NullProduct_ThrowsArgumentException()
+        {
+
+            InventoryOrderService service = new InventoryOrderService();
+
+            Product product = null;
+
+            Assert.Throws<ArgumentException>(() => service.AddProduct(product));
+        }
     }
+
 }
