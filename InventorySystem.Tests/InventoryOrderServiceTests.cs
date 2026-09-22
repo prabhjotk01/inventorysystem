@@ -71,5 +71,27 @@ namespace InventorySystem.Tests
             Assert.True(result.IsSuccess);
             Assert.Equal(21.00m, result.TotalCost);
         }
+
+        [Fact]
+        public void ProcessOrder_ZeroQuantity_ReturnsSuccess()
+        {
+            
+            InventoryOrderService service = new InventoryOrderService();
+
+            Product product = new Product
+            {
+                Id = "0104",
+                Name = "Fries",
+                UnitPrice = 5.00m,
+                StockQuantity = 10
+            };
+
+            service.AddProduct(product);
+
+            OrderResult result = service.ProcessOrder("0104", 0, 0.05m);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal(0.00m, result.TotalCost);
+        }
     }
 }
